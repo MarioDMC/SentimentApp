@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1>Welcome to the Twitter Sentiment Analysis app.</h1>
+    <p>What phrase would you like to analzye?</p>
+    <form method="GET">
+        <p>Enter a phrase to evaluate:</p>
+        <input type="text" name="phrase"/>
+        <input type="submit" value="Send"/>
+    </form>
+    <% var Sentiment = require('sentiment'); %>
+    <% var phrase = req.query.phrase %>
+    <% if(phrase) { %> 
+    <% sentiment(phrase, (err, result) => { %>
+    <% var response = 'sentiment(' + phrase + ') ===' + result.score %>
+    <% res.send(response) %>
+    <% }) %>
+    <% } %>
+
+</body>
+</html>
