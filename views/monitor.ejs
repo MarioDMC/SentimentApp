@@ -8,15 +8,15 @@
 <body>
     <h2>Sistema de analisis de sentimientos</h2>
     <p>¿Cuál ha sido la reacción de las personas acerca de <%=req.query.phrase%>?</p>
-    <img id ="img" src="http://<%=req.headers.host%>/img/neutral.png" height="42" width="42">
+    <img id ="img" src="https://<%=req.headers.host%>/img/neutral.png" height="42" width="42">
     <p>Tweets Analizados: 
     <span id="count">0</span>
     </p>
     <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 </body>
-<script src="http://<%=req.headers.host%>/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script>
-var io = io.connect('http://<%=req.headers.host%>')  
+var io = io.connect('https://<%=req.headers.host%>')  
 var phrase = '<%= req.query.phrase %>'
 io.emit('phrase', phrase)
 
@@ -34,7 +34,7 @@ var imgSrc = ''
     if (average == 0){
         imgSrc = '/img/neutral.png' 
     }  
-document.getElementById('img').src = 'http://<%=req.headers.host%>' + imgSrc 
+document.getElementById('img').src = 'https://<%=req.headers.host%>' + imgSrc 
 })
 </script>
 </html>
