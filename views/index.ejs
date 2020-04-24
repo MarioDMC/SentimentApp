@@ -6,20 +6,12 @@
     <title><%= title %></title>
 </head>
 <body>
-    <h1>Welcome to the Twitter Sentiment Analysis app.</h1>
-    <p>What phrase would you like to analzye?</p>
-    <form method="GET">
-        <p>Enter a phrase to evaluate:</p>
-        <input type="text" name="phrase"/>
+    <h2>Bienvenido al sistema de análisis de sentimientos</h2>
+    <p>¿Qué frase te ustaría analizar a través de Twitter?</p>
+    <form action= "twitter/monitor" method="GET">
+        <p>Ingresa la frase a evaluar:</p>
+        <input type="text" name="phrase" id='phrase' required/>
         <input type="submit" value="Send"/>
     </form>
-    <% var phrase = req.query.phrase %>
-    <% if(phrase) { %> 
-    <% sentiment(phrase, (err, result) => { %>
-    <% var response = 'sentiment(' + phrase + ') ===' + result.score %>
-    <% res.send(response) %>
-    <% }) %>
-    <% } %>
-
 </body>
 </html>

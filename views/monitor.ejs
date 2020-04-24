@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h2>Sistema de analisis de sentimientos</h2>
+    <p>¿Cuál ha sido la reacción de las personas acerca de <%=req.query.phrase%>?</p>
+    <img id ="img" src="http://<%=req.headers.host%>/img/neutral.png" height="42" width="42">
+    <p>Tweets Analizados: 
+    <span id="count">0</span>
+    </p>
+    <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+</body>
+<script src="http://<%=req.headers.host%>/socket.io/socket.io.js"></script>
+<script>
+var io = io.connect('http://<%=req.headers.host%>')  
+var phrase = '<%= req.query.phrase %>'
+io.emit('phrase', phrase)
+
+io.on('tweet', function(data){ 
+document.getElementById('count').innerHTML = data.count 
+var average = data.total / data.count 
+console.log(average)
+var imgSrc = ''
+    if (average > 0.5){
+        imgSrc = '/img/smiling.png' 
+    } 
+    if (average < 0.5){
+        imgSrc = '/img/sad.png' 
+    } 
+    if (average == 0){
+        imgSrc = '/img/neutral.png' 
+    }  
+document.getElementById('img').src = 'http://<%=req.headers.host%>' + imgSrc 
+})
+</script>
+</html>
