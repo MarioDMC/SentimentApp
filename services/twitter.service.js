@@ -35,17 +35,14 @@ module.exports = { monitor: (io) => {
                             if (code === 420 || code === 429)  {
                                 console.error("This shit is dead. API limit hit")
                             }
-                            //resetMonitoring()
                         });
                         stream.on('end', (response) => {
                         if (stream) {
                             console.error("This shit is dead. Stream ended unexpectedly.")
-                            //resetMonitoring()
                         }
                         });
                         stream.on('destroy', (response) => {
                         console.error("This shit is dead. Stream destroyed unexpectedly")
-                        //resetMonitoring()
                         });
                     })
                     socket.on('disconnect', () => {
