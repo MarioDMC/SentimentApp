@@ -4,17 +4,17 @@ const server = http.createServer(app)
 const io = require('socket.io').listen(server)
 const index = require('./routes/index.route')
 const twitter = require('./routes/twitter.route')
-const service = require('./services/twitter.service')
+const monitor = require('./services/twitter.service')
 
-const PORT = process.env.PORT
+const port = process.env.PORT || 3300
 
-server.listen(PORT)
-service.monitor(io)
+server.listen(port)
+monitor(io)
 
 app.use('/', index)
-app.use('/twitter', twitter(io))
+app.use('/twitter', twitter)
 
-console.log("App running on port: " + PORT)
+console.log("App running on port: " + port)
 
 
 

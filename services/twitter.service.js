@@ -1,7 +1,7 @@
 const config = require('../config/twitter.config')
 const sentiment = require('sentiment-spanish')
 
-module.exports = { monitor: (io) => {
+const monitor = (io) => {
     io.on('connection', (socket) =>{
         socket.on('phrase', (phrase) => {
             var stream, count, total, streamPhrase
@@ -36,12 +36,12 @@ module.exports = { monitor: (io) => {
                                 console.error("This shit is dead. API limit hit")
                             }
                         });
-                        stream.on('end', (response) => {
+                        stream.on('end', () => {
                         if (stream) {
                             console.error("This shit is dead. Stream ended unexpectedly.")
                         }
                         });
-                        stream.on('destroy', (response) => {
+                        stream.on('destroy', () => {
                         console.error("This shit is dead. Stream destroyed unexpectedly")
                         });
                     })
@@ -57,5 +57,6 @@ module.exports = { monitor: (io) => {
             })
         })
     })      
-    }
 }
+
+module.exports = monitor
