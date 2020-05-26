@@ -14,9 +14,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y%m%d')"
     - name: docker login 
-      run: docker login -u mariodmc -p 9c429198-ff71-48c7-8f9f-08c00c40dc51
+      run: docker login -u mariodmc -p ${{ secrets.DOCKER_HUB_TOKEN }}
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag mariodmc/sentimentapp:${{ steps.date.outputs.date }}
     - name: Push the Docker image
+      run: docker push mariodmc/sentimentapp:${{ steps.date.outputs.date }}
+    - name: Build the lastest Docker image
+      run: docker build . --file Dockerfile --tag mariodmc/sentimentapp:lastest
+    - name: Push the lastest Docker image
       run: docker push mariodmc/sentimentapp:lastest
